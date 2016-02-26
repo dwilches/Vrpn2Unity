@@ -232,7 +232,7 @@ extern "C" {
 	// This function returns a DEVICE_ID which you need to keep in Unity
 	// and pass as a parameter for the other functions.
 	//
-	// Recommendation: call this function form the "Start" function of one
+	// Recommendation: call this function form the "OnEnable" function of one
 	// of your MonoBehaviours.
 	//
 	// DO NOT ASSUME anything about the value of this DEVICE_ID.
@@ -261,8 +261,8 @@ extern "C" {
 	// you want.
 	DLL_EXPORT void VrpnUpdate(int device_idx)
 	{
-		// This is better than causing a SEGFAULT
-		if (!v2u_wrappers[device_idx])
+		// This is better than causing a SEGFAULT. Ignore the call if we are given an invalid device_idx
+		if (device_idx < 0 || device_idx >= static_cast<int>(v2u_wrappers.size()) || !v2u_wrappers[device_idx])
 			return;
 
 		v2u_wrappers[device_idx]->MainLoop();
@@ -275,13 +275,15 @@ extern "C" {
 	// You need to pass the same DEVICE_ID that was obtained from the call to
 	// "VrpnStart()".
 	//
-	// Recommendation: call this function form the "OnDestroy" function of one
+	// Recommendation: call this function form the "OnDisable" function of one
 	// of your MonoBehaviours.
 	DLL_EXPORT void VrpnOnDestroy(int device_idx)
 	{
-		if (!v2u_wrappers[device_idx])
+		// This is better than causing a SEGFAULT. Ignore the call if we are given an invalid device_idx
+		if (device_idx < 0 || device_idx >= static_cast<int>(v2u_wrappers.size()) || !v2u_wrappers[device_idx])
 			return;
 
+		// Deleting before removing from the vector is OK, it's just a pointer
 		delete v2u_wrappers[device_idx];
 		v2u_wrappers[device_idx] = nullptr;
 	}
