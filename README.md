@@ -25,3 +25,10 @@ The code of the Unity project is very straightforward:
    the data that is read from the VRPN server. This file is just one
    example of how you should do with your custom devices.
 
+Foot notes:
+====
+* You need the 32-bit version of the Unity editor as VRPN is compiled for 32-bits
+* The version used for building this DLL was VRPN 07.33 so if you want to use another version, just download the full source-code.
+* I'm providing the compiled DLLs inside those ZIP files. These DLLs don't depend on other 3rd-party libraries, but you will need the [redistributable package of Microsoft's Visual Studio 2013][1]. I have also tested it with the redistributables of VS2012 and it works, other versions may work as well but I haven't tested them.
+
+[1]: http://www.microsoft.com/en-us/download/details.aspx?id=40784
