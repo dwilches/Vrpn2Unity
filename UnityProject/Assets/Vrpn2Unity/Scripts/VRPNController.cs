@@ -1,4 +1,12 @@
-﻿using UnityEngine;
+/**
+ * Vrpn2Unity
+ * Author: Daniel Wilches <dwilches@gmail.com>
+ *
+ * This work is released under the Creative Commons Attributions license.
+ * https://creativecommons.org/licenses/by/2.0/
+ */
+
+using UnityEngine;
 using System.Collections;
 using System.Runtime.InteropServices;
 
@@ -39,11 +47,11 @@ public class VRPNController
                     float quat_x, float quat_y, float quat_z,
                     float quat_w);
 
-	
+
 	//*************************************************************************
 	// These are the function exported from the DLL. You can call them as you
 	// would call any other function.
-	//*************************************************************************		
+	//*************************************************************************
 
 	// This function must be called to initialize a device. You can pass NULL
 	// for any of the callbacks if you don't need them.
@@ -53,7 +61,7 @@ public class VRPNController
 	// Recommendation: call this function form the "Start" function of one
 	// of your MonoBehaviours.
 	//
-	// DO NOT ASSUME anything about the value of this DEVICE_ID.	
+	// DO NOT ASSUME anything about the value of this DEVICE_ID.
 	[DllImport ("Vrpn2Unity", CallingConvention=CallingConvention.StdCall)]
 	public static extern int VrpnStart (string device,
 	                                      AnalogCallback analogCallback,
@@ -68,10 +76,10 @@ public class VRPNController
 	// Recommendation: call this function form the "Update" function of one
 	// of your MonoBehaviours. if that is too often for you, use Time.deltaTime
 	// to keep track of the last time it was called and invoke it as often as
-	// you want.		  
+	// you want.
 	[DllImport ("Vrpn2Unity")]
 	public static extern void VrpnUpdate (int device_index);
-	
+
 	// This function tells this DLL to deallocate any memory used for the
 	// device DEVICE_ID. After this call the actual VRPN connection is closed
 	// and you will not receive any further callback invocations.
@@ -83,5 +91,5 @@ public class VRPNController
 	// of your MonoBehaviours.
 	[DllImport ("Vrpn2Unity")]
 	public static extern void VrpnOnDestroy (int device_index);
-	
+
 }
