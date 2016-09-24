@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 //                 invocation, you can call it once each 100ms with the help
 //                 of Time.deltaTime
 //
-// An example of a class that it is found on "MouseVRPNBehaviour.cs".
+// An example class that uses Vrpn2Unity is found on "MouseVRPNBehaviour.cs".
 //*****************************************************************************
 public class VRPNController
 {

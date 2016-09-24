@@ -46,7 +46,7 @@ This work is released under the [Creative Commons Attributions][3] license.
 
 If you use this library please let me know, so I know my work has been useful to you :)
 
-![CC Attribution](images/CC-BY_icon.png?raw=true)
+![CC Attribution](docs/images/CC-BY_icon.png?raw=true)
 
 
 [1]: http://www.microsoft.com/en-us/download/details.aspx?id=40784

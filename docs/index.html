@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Vrpn2Unity: Communicating custom hardware devices with Unity</title>
+
+        <!-- Google Fonts -->
+    	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <!-- Custom style -->
+    	<link href='css/style.css' rel='stylesheet' type='text/css'>
+        <link href="css/sticky-footer.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div class="jumbotron text-center">
+                <p><img src="images/vrpn2unity-logo.png" /></p>
+                <p>Have you ever wanted to connect that weird device to Unity®
+                    but cannot find an easy way?</p>
+                <p>Me too, so I made a simple to use library so other people
+                    don't need to reinvent the wheel.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-6 text-center">
+                    <a href="https://github.com/DWilches/Vrpn2Unity/raw/master/UnityPackages/Vrpn2Unity.unitypackage">
+                        <div class="logo-container" align="center">
+                            <img class="img-responsive logo" src="images/unity-logo.png" />
+                            Download the Unity® Package<br/>(this is all you need)
+                        </div>
+                    </a>
+                </div>
+                <div class="col-lg-5 col-sm-6 text-center">
+                    <a href="https://github.com/DWilches/Vrpn2Unity">
+                        <div class="logo-container" align="center">
+                            <img class="img-responsive logo" src="images/github-logo.png" />
+                            Watch the Source<br/>
+                            (or contribute to it)
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>How does it work?</h2>
+                    <div style="margin:30px">
+                        <p><em>Vrpn2Unity</em> is a wrapper around Vrpn's C++ code.
+                            It gives you a function to poll Vrpn servers, and invokes
+                            your C# callbacks when data is available.</p>
+                        <p>It's that simple. Check next how the code looks (there
+                            is also a full working example inside of the Unity
+                            package).</p>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <h2>How does it look?</h2>
+                    <div style="margin:30px">
+                        <pre class="prettyprint lang-cs"><code>public class MyWeirdDeviceBehaviour : MonoBehaviour
+{
+    // Vrpn address for the device we want to open.
+    public string device_address = "MyWeirdDevice@localhost";
+
+    // You need to keep track of the DEVICE_ID as it is needed for invoking
+    // some functions. Negative numbers are invalid and checked inside
+    // Vrpn2Unity, so it is wise to put here one such values.
+    private int device_id = -1;
+
+    // Used to keep track of the current position of the device.
+    private static Vector3 last_position;
+
+    //**************************************************************************
+    // Start the VRPN connection through Vrpn2Unity.
+    //**************************************************************************
+    void OnEnable()
+    {
+        // Open the device for analog updates.
+        device_id = VRPNController.VrpnStart(device_address,
+                          new VRPNController.AnalogCallback(onWeirdDeviceMove),
+                          null,
+                          null);
+    }
+
+    //**************************************************************************
+    // Free the VRPN and Vrpn2Unity resources.
+    //**************************************************************************
+    void OnDisable()
+    {
+        // This is safe, it does nothing if device_id < 0
+        VRPNController.VrpnOnDestroy(device_id);
+        device_id = -1;
+    }
+
+    //**************************************************************************
+    // Update is used to let Vrpn2Unity know it can poll the Vrpn server
+    // so you control how fast this happens.
+    //**************************************************************************
+    void Update ()
+    {
+        // Poll new data asynchronous to Vrpn, this data will arrive way after
+        // this Update has finished.
+        // This is safe, it does nothing if device_id < 0
+        VRPNController.VrpnUpdate(device_id);
+
+        // Move this GameObject according to the last known position of the
+        // device
+        transform.localPosition = last_position;
+    }
+
+    //**************************************************************************
+    // Analog callback, must be static.
+    //**************************************************************************
+    public static void onWeirdDeviceMove(int num_channel, float value)
+    {
+        // Analog callbacks are called once per channel (x, y, z in this case).
+        if (num_channel == 0)
+            last_position.x = value;
+        else if (num_channel == 1)
+            last_position.y = value;
+        else
+            last_position.z = value;
+    }
+}
+</code></pre>
+
+                        <p>And inside Unity, just attach that script to one of your GameObjects:</p>
+                        <p align="center"><img class="img-responsive img-rounded"
+                                                src="images/sample-unity.png" /></p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div><!-- container -->
+
+
+        <!-- Fixed footer -->
+        <footer class="footer">
+            <div class="container text-center">
+                <p>
+                    Contact me at:<br/> dwilches<i class="fa fa-at" aria-hidden="true" style="padding:2px"></i>gmail.com
+                </p>
+            </div>
+        </footer>
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script src="https://use.fontawesome.com/bb71d574c4.js"></script>
+        <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=cs&amp;skin=sunburst"></script>
+
+    </body>
+</html>
