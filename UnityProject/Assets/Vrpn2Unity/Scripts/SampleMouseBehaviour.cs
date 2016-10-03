@@ -32,12 +32,12 @@ public class SampleMouseBehaviour : MonoBehaviour
     // Private variables
     //*************************************************************************
 
-	// Used to keep track of the current position of the mouse, as Analog
-	// callbacks are invoked once for each channel independently.
-	private static float mouse_x, mouse_y;
-	// You need to keep track of the DEVICE_ID as it is needed for invoking
-	// some functions
-	private int device_id = -1;
+    // Used to keep track of the current position of the mouse, as Analog
+    // callbacks are invoked once for each channel independently.
+    private static float mouse_x, mouse_y;
+    // You need to keep track of the DEVICE_ID as it is needed for invoking
+    // some functions
+    private int device_id = -1;
 
 
     //*************************************************************************
@@ -77,15 +77,15 @@ public class SampleMouseBehaviour : MonoBehaviour
         }
     }
 
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update ()
     {
         // Poll new data from Unity
         VRPNController.VrpnUpdate(device_id);
 
         // This is an example of how to move a cube with the mouse using VRPN
         transform.localPosition = new Vector3((mouse_x - 0.5f) * 5, -(mouse_y - 0.5f) * 5, 0);
-	}
+    }
 
 
     //*************************************************************************
