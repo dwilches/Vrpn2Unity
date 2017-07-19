@@ -2,14 +2,14 @@ Vrpn2Unity
 ==========
 This library lets you read data from your devices through VRPN and into Unity. It works with Unity 5.x (even the Personal version). With this library you don't need to worry about hogging your Unity thread, as all the polling to VRPN is made in a separate thread. You just call Vrpn2Unity methods and it does all the heavy lifting behind the scenes.
 
+**PLEASE NOTE:** [Unity stopped producing the 32-bit version of their editor](https://blogs.unity3d.com/2016/11/15/end-of-support-for-32-bit-editor-for-windows/) and as Vrpn only works as a 32-bit lib/dll, this project is unmaintained now.
+
 This project's repository contains the following folders.
 
 UnityPackages
 ====
 This is the one you need to start working with [VRPN][2] and [Unity][4] together.
 If you are in a hurry, just download the Unity Package and import it to your project. There is a sample scene you can check to understand how to make your own device work.
-
-**PLEASE NOTE:** [Unity stopped producing the 32-bit version of their editor](https://blogs.unity3d.com/2016/11/15/end-of-support-for-32-bit-editor-for-windows/) and as Vrpn only works as a 32-bit lib/dll, this project is unmaintained now.
 
 UnityProject
 ====
