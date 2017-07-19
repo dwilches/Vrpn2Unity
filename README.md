@@ -9,6 +9,8 @@ UnityPackages
 This is the one you need to start working with [VRPN][2] and [Unity][4] together.
 If you are in a hurry, just download the Unity Package and import it to your project. There is a sample scene you can check to understand how to make your own device work.
 
+PLEASE NOTE: [Unity stopped producing the 32-bit version of their editor](https://blogs.unity3d.com/2016/11/15/end-of-support-for-32-bit-editor-for-windows/)) and as Vrpn only works as a 32-bit lib/dll, this project is unmaintained now.
+
 UnityProject
 ====
 This folder contains a sample project where I imported the aforementioned package. Just open it with Unity and it will work.
