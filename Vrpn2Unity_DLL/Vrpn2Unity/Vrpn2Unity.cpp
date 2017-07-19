@@ -34,9 +34,9 @@
 // example scene). There is a callback for each type of VRPN event:
 // Analog, Button and Tracker.
 //*****************************************************************************
-typedef void(__stdcall *Vrpn2UnityAnalogCallback)(int num_channel, float value);
-typedef void(__stdcall *Vrpn2UnityButtonCallback)(int num_button, int state);
-typedef void(__stdcall *Vrpn2UnityTrackerCallback)(int num,
+typedef void(__stdcall *Vrpn2UnityAnalogCallback)(long time_sec, long tv_usec, int num_channel, float value);
+typedef void(__stdcall *Vrpn2UnityButtonCallback)(long time_sec, long tv_usec, int num_button, int state);
+typedef void(__stdcall *Vrpn2UnityTrackerCallback)(long time_sec, long tv_usec, int num,
 	float pos_x, float pos_y, float pos_z,
 	float quat_x, float quat_y, float quat_z, float quat_w);
 
@@ -175,7 +175,7 @@ void Vrpn2UnityWrapper::HandleAnalog(const vrpn_ANALOGCB& analogData)
 
 	for (int i = 0; i < analogData.num_channel; i++)
 	{
-		analogCallback(i, (float)analogData.channel[i]);
+		analogCallback(analogData.msg_time.tv_sec, analogData.msg_time.tv_usec, i, (float)analogData.channel[i]);
 	}
 }
 
@@ -187,7 +187,7 @@ void Vrpn2UnityWrapper::HandleButton(const vrpn_BUTTONCB& buttonData)
 	if (!buttonCallback)
 		return;
 
-	buttonCallback(buttonData.button, buttonData.state);
+	buttonCallback(buttonData.msg_time.tv_sec, buttonData.msg_time.tv_usec, buttonData.button, buttonData.state);
 }
 
 void Vrpn2UnityWrapper::HandleTracker(const vrpn_TRACKERCB& trackerData)
@@ -198,7 +198,7 @@ void Vrpn2UnityWrapper::HandleTracker(const vrpn_TRACKERCB& trackerData)
 	if (!trackerCallback)
 		return;
 
-	trackerCallback(trackerData.sensor,
+	trackerCallback(trackerData.msg_time.tv_sec, trackerData.msg_time.tv_usec, trackerData.sensor,
 		(float)trackerData.pos[0], (float)trackerData.pos[1], (float)trackerData.pos[2],
 		(float)trackerData.quat[0], (float)trackerData.quat[1],
 		(float)trackerData.quat[2], (float)trackerData.quat[3]);

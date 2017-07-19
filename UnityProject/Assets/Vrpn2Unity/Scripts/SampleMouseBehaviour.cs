@@ -93,14 +93,20 @@ public class SampleMouseBehaviour : MonoBehaviour
     //*************************************************************************
 
     // Button callback
-    public static void onMouseButton(int num_button, int state)
+    public static void onMouseButton(long tv_secs,
+                                     long tv_usecs,
+                                     int num_button,
+                                     int state)
     {
         Debug.Log("A mouse button has changed its state. Button: " + num_button
                     + " state: " + (state == 1 ? "PRESSED" : "RELEASED"));
     }
 
     // Analog callback
-    public static void onMouseMove(int num_channel, float value)
+    public static void onMouseMove(long tv_secs,
+                                   long tv_usecs,
+                                   int num_channel,
+                                   float value)
     {
         if (num_channel == 0)
             mouse_x = value;

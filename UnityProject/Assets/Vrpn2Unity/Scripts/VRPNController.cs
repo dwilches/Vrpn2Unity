@@ -38,11 +38,17 @@ public class VRPNController
     // between the DLL and Unity. The DLL will call whatever you pass to it
     // using these delegates.
     //*************************************************************************
-    public delegate void AnalogCallback(int num_channel,
+    public delegate void AnalogCallback(long tv_secs,
+                    long tv_usecs,
+                    int num_channel,
                     float value);
-    public delegate void ButtonCallback(int num_button,
+    public delegate void ButtonCallback(long tv_secs,
+                    long tv_usecs,
+                    int num_button,
                     int state);
-    public delegate void TrackerCallback(int sensor_id,
+    public delegate void TrackerCallback(long tv_secs,
+                    long tv_usecs,
+                    int sensor_id,
                     float pos_x, float pos_y, float pos_z,
                     float quat_x, float quat_y, float quat_z,
                     float quat_w);
