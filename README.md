@@ -1,8 +1,12 @@
+<a href="https://blogs.unity3d.com/2016/11/15/end-of-support-for-32-bit-editor-for-windows/">
+<img src="/docs/images/unmaintaned-now.png"
+     alt="Unity doesn't support 32 bits now, so this library is unmaintained"
+     title="Unity doesn't support 32 bits now, so this library is unmaintained">
+</a>
+
 Vrpn2Unity
 ==========
 This library lets you read data from your devices through VRPN and into Unity. It works with Unity 5.x (even the Personal version). With this library you don't need to worry about hogging your Unity thread, as all the polling to VRPN is made in a separate thread. You just call Vrpn2Unity methods and it does all the heavy lifting behind the scenes.
-
-**PLEASE NOTE:** [Unity stopped producing the 32-bit version of their editor](https://blogs.unity3d.com/2016/11/15/end-of-support-for-32-bit-editor-for-windows/) and as Vrpn only works as a 32-bit lib/dll, this project is unmaintained now.
 
 This project's repository contains the following folders.
 
